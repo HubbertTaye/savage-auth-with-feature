@@ -1,21 +1,20 @@
-// server.js
+// change the database
 
-// set up ======================================================================
+// set up ===============================================================
 // get all the tools we need (modules)
-var express  = require('express');
-var app      = express();
-var port     = process.env.PORT || 8080; //either enviornment variable port or 8080 (will set up enviornment later)
+const express  = require('express');
+const app      = express();
+const port     = process.env.PORT || 8080; //either enviornment variable port or 8080 (will set up enviornment later)
 const MongoClient = require('mongodb').MongoClient
-var mongoose = require('mongoose'); //works with mongodb
-var passport = require('passport'); //authentication module (create users, log in session, etc)
-var flash    = require('connect-flash'); //view/access error messages. 'wrong password' etc
+const mongoose = require('mongoose'); //works with mongodb
+const passport = require('passport'); //authentication module (create users, log in session, etc)
+const flash    = require('connect-flash'); //view/access error messages. 'wrong password' etc
+const morgan    = require('morgan'); //debugger, also logs all requests in cmd
+const cookieParser = require('cookie-parser'); //work w/ cookies. in this case user login session
+const bodyParser   = require('body-parser');
+const session      = require('express-session'); //where ever u move in the app, u r still logged in thus can always go back to the profile page. this is called a session (idk if its related to this part)
 
-var morgan    = require('morgan'); //debugger, also logs all requests in cmd
-var cookieParser = require('cookie-parser'); //work w/ cookies. in this case user login session
-var bodyParser   = require('body-parser');
-var session      = require('express-session'); //where ever u move in the app, u r still logged in thus can always go back to the profile page. this is called a session (idk if its related to this part)
-
-var configDB = require('./config/database.js'); //stores databse object contains url and dbName from file config/database.js made for keeping database info secret when pushing to git
+const configDB = require('./config/database.js'); //stores databse object contains url and dbName from file config/database.js made for keeping database info secret when pushing to git
 
 var db
 
@@ -39,7 +38,7 @@ app.set('view engine', 'ejs'); // set up ejs for templating
 
 // required for passport
 app.use(session({
-    secret: 'rcbootcamp2019a', // session secret
+    secret: 'bigupyaself', // session secret
     resave: true,
     saveUninitialized: true
 }));
@@ -53,4 +52,4 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 
 // launch ======================================================================
 app.listen(port);
-console.log('The magic happens on port ' + port);
+console.log(`The magic happens on port ${port}`);
